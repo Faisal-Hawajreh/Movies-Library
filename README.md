@@ -3,7 +3,7 @@
 **Author Name**: Faisal Al-hawajreh
 
 ## WRRC
-![Wrrc](Wrrc.jpg)
+![Wrrc](Task12.jpg)
 ## Overview
 
 ## Getting Started
@@ -17,6 +17,11 @@
 
 ## Project Features
 <!-- What are the features included in you app -->
-1. In home page : we get the movie data from movies data file (json) which is our database, to be displayed.
-2. In favorite page : it will display greeting sentance to user.
+1. In the home page : we get the movie data from movies data file (json) which is our database, to be displayed.
+2. In the favorite page : it will display greeting sentance to user.
 3. If we write wrong address in our localhost, it will display an error for us.
+4. In the trending page: it will show you the details of spider man movie. (you can see other movie detail by changing id number).
+5. In the search page:enter the movie name and it will show you all the details about it.
+6. In the languages page: it will show you the language Abbreviation according to iso.
+7. In the jobs page: enter the department name and it will show you the jobs inside this department.
+8. If something wrong happen in API website and server doesn't reach to data , it will show you an error message (status: 500 (Internal Server Error))
