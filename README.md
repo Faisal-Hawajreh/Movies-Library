@@ -3,7 +3,7 @@
 **Author Name**: Faisal Al-hawajreh
 
 ## WRRC
-![Wrrc](Task12.jpg)
+![Wrrc](Task13.jpg)
 ## Overview
 
 ## Getting Started
@@ -25,3 +25,5 @@
 6. In the languages page: it will show you the language Abbreviation according to iso.
 7. In the jobs page: enter the department name and it will show you the jobs inside this department.
 8. If something wrong happen in API website and server doesn't reach to data , it will show you an error message (status: 500 (Internal Server Error))
+9. now you can add your favorite movie and give us your opinion by getting in to (add movie page), your opinion is interesting for us, so we will save your movie in our database.
+10. to see all movies that you commented on it, you can get in to (get movies page) to get all comments on all movies.
