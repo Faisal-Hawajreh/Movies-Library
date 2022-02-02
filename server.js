@@ -30,8 +30,65 @@ server.get('/languages',languagesHandler)
 server.get('/jobs',jobsHandler)
 server.post('/addMovie',addMovieHandler)
 server.get('/getMovies',getMovieHandler)
+server.put('/updateMovie/:id',updateMovieHandler)
+server.delete('/deleteMovie/:id',deleteMovieHandler)
+server.get('/getOneMovie/:id',getOneMovieHandler)
 server.get('*',notFoundHandler);
 server.use(InternalServerErrHandler);
+
+
+// /UPDATE/id: create an update request to update your comments for a specific movie in the database.\put 
+// /DELETE/id : create a delete request to remove a specific movie from your database.\delete
+// getMovie/id: Create a get request to get a specific movie from the database\get
+
+
+
+function updateMovieHandler(req,res){
+    const movie = req.body;
+    //   console.log(movie)
+    let id = req.params.id;
+    let sql = `UPDATE addMovie SET title = $1,comment = $2 WHERE id = $3 RETURNING *; `
+// UPDATE table_name
+// SET column1 = value1, column2 = value2, ...
+// WHERE condition;
+    let values = [movie.title,movie.comment,id];
+    client.query(sql,values).then(data=>{
+    //     // console.log(data.rows)
+        res.status(201).json(data.rows);
+        // res.status(200).json(data.rows);
+
+    }).catch((err)=>{
+        InternalServerErrHandler(err,req,res);
+    })
+}
+
+function deleteMovieHandler(req,res){
+    let id = req.params.id;
+    let sql = `DELETE FROM addMovie WHERE id = ${id};`
+    // DELETE FROM table_name WHERE condition;
+    client.query(sql).then(data=>{
+        // console.log(data.rows)
+        res.status(200).send("The Movie has been deleted");
+        // res.status(204).json({});
+    }).catch((err)=>{
+        InternalServerErrHandler(err,req,res);
+    })
+}
+
+function getOneMovieHandler(req,res){
+    let id = req.params.id;
+    let sql = `SELECT * FROM addMovie WHERE id = ${id};`
+    
+    client.query(sql).then(data=>{
+        // console.log(data.rows)
+        res.status(200).json(data.rows);
+
+    }).catch((err)=>{
+        InternalServerErrHandler(err,req,res);
+    })
+}
+
+
 
 
 function addMovieHandler(req,res){
@@ -41,7 +98,7 @@ function addMovieHandler(req,res){
     let values = [movie.title,movie.comment];
     client.query(sql,values).then(data=>{
         // console.log(data.rows)
-        res.status(200).json(data.rows);
+        res.status(201).json(data.rows);
 
     }).catch((err)=>{
         InternalServerErrHandler(err,req,res);
@@ -67,13 +124,13 @@ function getMovieHandler(req,res){
 
 
 
-
-
-
-
 // departments = Crew,Art,Writing,Visual Effects,Production,Camera,Directing,Editing,Sound,Lighting,Costume & Make-Up,Actors
-let departmentName = "Actors"
+// let departmentName = "Actors"
 function jobsHandler(req,res){
+    let departmentName = req.query.departmentName;
+    // query can used only in GET function
+    // http://localhost:3000/jobs?departmentName=Actors
+    // localhost:PORT(endpoint such as (/jobs))(?)(query-params-name)=(query-params-value)
     let urlJobs = `https://api.themoviedb.org/3/configuration/jobs?api_key=${process.env.APIKEY}`
     axios.get(urlJobs)
         .then((result)=>{
@@ -145,8 +202,11 @@ function languagesHandler(req,res){
 
 
 
-let movieName = "Boruto: Naruto the Movie"
+// let movieName = "Boruto: Naruto the Movie"
 function searchMovieHandler(req,res){
+    let movieName = req.query.movieName;
+    // http://localhost:3000/search?movieName=Boruto: Naruto the Movie
+    console.log(movieName)
     let urlSearch = `https://api.themoviedb.org/3/search/movie?api_key=${process.env.APIKEY}&language=en-US&query=The&page=2`
     axios.get(urlSearch)
         .then((result)=>{
