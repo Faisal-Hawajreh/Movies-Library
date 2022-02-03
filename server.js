@@ -7,10 +7,13 @@ const cors = require('cors');
 const axios = require('axios');
 const pg = require('pg')
 
-const client = new pg.Client(process.env.DATABASE_URL);
-
+// const client = new pg.Client(process.env.DATABASE_URL);
+//DATABASE_URL=postgres://faisal:123456@localhost:5432/movies
+const client = new pg.Client({
+    connectionString: process.env.DATABASE_URL,
+    ssl: { rejectUnauthorized: false }
+})
 const server = express();
-
 
 server.use(cors());
 server.use(express.json());// whenever you read from the body please parse it to a json format 
@@ -263,7 +266,7 @@ client.connect().then(()=>{
         console.log(`listening to port ${PORT}`)
     })
 
-})
+// })
 
 
 
