@@ -97,8 +97,8 @@ function getOneMovieHandler(req,res){
 function addMovieHandler(req,res){
     const movie = req.body;
     //   console.log(movie)
-    let sql = `INSERT INTO addMovie(title,comment) VALUES ($1,$2) RETURNING *;`
-    let values = [movie.title,movie.comment];
+    let sql = `INSERT INTO addMovie(title,comment,image) VALUES ($1,$2,$3) RETURNING *;`
+    let values = [movie.title,movie.comment,movie.image];
     client.query(sql,values).then(data=>{
         // console.log(data.rows)
         res.status(201).json(data.rows);
