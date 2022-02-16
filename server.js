@@ -173,12 +173,8 @@ function trendingMovieHandler(req,res){
             let movies = result.data.results.map(movie =>{
             return new NewMovies(movie.id,movie.title,movie.release_date,movie.poster_path,movie.overview)
         });
-        for(let i = 0;i<movies.length;i++){
-            let exactMovie = movies[i]
-            if(exactMovie.id == 634649){
-                res.status(200).json(exactMovie)
-            }
-        }
+        res.status(200).json(movies)
+        
         // res.status(200).json(movies);
         // result.data.results.forEach(movie =>{
         //     newArr.push(new Movies(movie.original_title,movie.poster_path,movie.overview);
