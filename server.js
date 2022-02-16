@@ -50,11 +50,11 @@ function updateMovieHandler(req,res){
     const movie = req.body;
     //   console.log(movie)
     let id = req.params.id;
-    let sql = `UPDATE addMovie SET title = $1,comment = $2 WHERE id = $3 RETURNING *; `
+    let sql = `UPDATE addMovie SET title = $1,comment = $2,img = $3 WHERE id = $4 RETURNING *; `
 // UPDATE table_name
 // SET column1 = value1, column2 = value2, ...
 // WHERE condition;
-    let values = [movie.title,movie.comment,id];
+    let values = [movie.title,movie.comment,movie.img,id];
     client.query(sql,values).then(data=>{
     //     // console.log(data.rows)
         res.status(201).json(data.rows);
@@ -97,8 +97,8 @@ function getOneMovieHandler(req,res){
 function addMovieHandler(req,res){
     const movie = req.body;
     //   console.log(movie)
-    let sql = `INSERT INTO addMovie(title,comment,image) VALUES ($1,$2,$3) RETURNING *;`
-    let values = [movie.title,movie.comment,movie.image];
+    let sql = `INSERT INTO addMovie(title,comment,img) VALUES ($1,$2,$3) RETURNING *;`
+    let values = [movie.title,movie.comment,movie.img];
     client.query(sql,values).then(data=>{
         // console.log(data.rows)
         res.status(201).json(data.rows);
